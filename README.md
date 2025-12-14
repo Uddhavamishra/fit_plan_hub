@@ -72,3 +72,8 @@ Run the application:
 Open your browser:
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:5000
+
+
+
+
+Made By Uddhava Mishra
