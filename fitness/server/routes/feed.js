@@ -6,9 +6,7 @@ const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-// @route   GET /api/feed
-// @desc    Get personalized feed for logged-in user
-// @access  Private
+
 router.get('/', protect, async (req, res) => {
   try {
     // Get trainers the user follows
@@ -65,9 +63,7 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
-// @route   GET /api/feed/purchased
-// @desc    Get all purchased plans with full access
-// @access  Private
+
 router.get('/purchased', protect, async (req, res) => {
   try {
     // Get active subscriptions

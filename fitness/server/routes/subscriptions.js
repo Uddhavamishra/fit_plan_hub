@@ -5,9 +5,6 @@ const { protect, userOnly } = require('../middleware/auth');
 
 const router = express.Router();
 
-// @route   POST /api/subscriptions/:planId
-// @desc    Subscribe to a fitness plan (simulated payment)
-// @access  Private (Users only)
 router.post('/:planId', protect, userOnly, async (req, res) => {
   try {
     const plan = await FitnessPlan.findById(req.params.planId);
@@ -62,9 +59,6 @@ router.post('/:planId', protect, userOnly, async (req, res) => {
   }
 });
 
-// @route   GET /api/subscriptions
-// @desc    Get all subscriptions for current user
-// @access  Private
 router.get('/', protect, async (req, res) => {
   try {
     const subscriptions = await Subscription.find({ user: req.user._id })
@@ -96,9 +90,7 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
-// @route   GET /api/subscriptions/check/:planId
-// @desc    Check if user is subscribed to a plan
-// @access  Private
+
 router.get('/check/:planId', protect, async (req, res) => {
   try {
     const subscription = await Subscription.findOne({
@@ -119,9 +111,7 @@ router.get('/check/:planId', protect, async (req, res) => {
   }
 });
 
-// @route   DELETE /api/subscriptions/:subscriptionId
-// @desc    Cancel a subscription
-// @access  Private
+
 router.delete('/:subscriptionId', protect, async (req, res) => {
   try {
     const subscription = await Subscription.findOne({

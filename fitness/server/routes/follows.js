@@ -6,9 +6,7 @@ const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-// @route   POST /api/follows/:trainerId
-// @desc    Follow a trainer
-// @access  Private
+
 router.post('/:trainerId', protect, async (req, res) => {
   try {
     // Can't follow yourself
@@ -56,9 +54,6 @@ router.post('/:trainerId', protect, async (req, res) => {
   }
 });
 
-// @route   DELETE /api/follows/:trainerId
-// @desc    Unfollow a trainer
-// @access  Private
 router.delete('/:trainerId', protect, async (req, res) => {
   try {
     const follow = await Follow.findOneAndDelete({
@@ -80,9 +75,7 @@ router.delete('/:trainerId', protect, async (req, res) => {
   }
 });
 
-// @route   GET /api/follows/following
-// @desc    Get list of trainers current user is following
-// @access  Private
+
 router.get('/following', protect, async (req, res) => {
   try {
     const following = await Follow.find({ follower: req.user._id })
@@ -117,9 +110,6 @@ router.get('/following', protect, async (req, res) => {
   }
 });
 
-// @route   GET /api/follows/check/:trainerId
-// @desc    Check if current user follows a trainer
-// @access  Private
 router.get('/check/:trainerId', protect, async (req, res) => {
   try {
     const follow = await Follow.findOne({
@@ -137,9 +127,7 @@ router.get('/check/:trainerId', protect, async (req, res) => {
   }
 });
 
-// @route   GET /api/follows/followers
-// @desc    Get followers (for trainers)
-// @access  Private
+
 router.get('/followers', protect, async (req, res) => {
   try {
     if (req.user.role !== 'trainer') {

@@ -26,7 +26,7 @@ const subscriptionSchema = new mongoose.Schema({
   paymentStatus: {
     type: String,
     enum: ['pending', 'completed', 'failed'],
-    default: 'completed'  // Simulated payment
+    default: 'completed' 
   },
   isActive: {
     type: Boolean,
@@ -34,7 +34,7 @@ const subscriptionSchema = new mongoose.Schema({
   }
 });
 
-// Compound index to prevent duplicate subscriptions
+// prevent duplicate subscriptions
 subscriptionSchema.index({ user: 1, plan: 1 }, { unique: true });
 
 module.exports = mongoose.model('Subscription', subscriptionSchema);

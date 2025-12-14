@@ -14,9 +14,7 @@ const planValidation = [
   body('duration').isInt({ min: 1 }).withMessage('Duration must be at least 1 day')
 ];
 
-// @route   GET /api/plans
-// @desc    Get all active fitness plans (preview for non-subscribers)
-// @access  Public
+
 router.get('/', optionalAuth, async (req, res) => {
   try {
     const { category, difficulty, trainer, search } = req.query;
@@ -38,7 +36,7 @@ router.get('/', optionalAuth, async (req, res) => {
       .populate('trainer', 'name email specialization')
       .sort({ createdAt: -1 });
 
-    // Get user's subscriptions if logged in
+    
     let userSubscriptions = [];
     if (req.user) {
       const subs = await Subscription.find({ 
@@ -80,9 +78,7 @@ router.get('/', optionalAuth, async (req, res) => {
   }
 });
 
-// @route   GET /api/plans/:id
-// @desc    Get single plan details
-// @access  Public (preview) / Private (full access for subscribers)
+
 router.get('/:id', optionalAuth, async (req, res) => {
   try {
     const plan = await FitnessPlan.findById(req.params.id)
@@ -143,9 +139,7 @@ router.get('/:id', optionalAuth, async (req, res) => {
   }
 });
 
-// @route   POST /api/plans
-// @desc    Create a new fitness plan
-// @access  Private (Trainers only)
+
 router.post('/', protect, trainerOnly, planValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -178,9 +172,7 @@ router.post('/', protect, trainerOnly, planValidation, async (req, res) => {
   }
 });
 
-// @route   PUT /api/plans/:id
-// @desc    Update a fitness plan
-// @access  Private (Plan owner only)
+
 router.put('/:id', protect, trainerOnly, async (req, res) => {
   try {
     let plan = await FitnessPlan.findById(req.params.id);
@@ -219,9 +211,6 @@ router.put('/:id', protect, trainerOnly, async (req, res) => {
   }
 });
 
-// @route   DELETE /api/plans/:id
-// @desc    Delete a fitness plan
-// @access  Private (Plan owner only)
 router.delete('/:id', protect, trainerOnly, async (req, res) => {
   try {
     const plan = await FitnessPlan.findById(req.params.id);
@@ -247,9 +236,7 @@ router.delete('/:id', protect, trainerOnly, async (req, res) => {
   }
 });
 
-// @route   GET /api/plans/trainer/myplans
-// @desc    Get all plans by current trainer
-// @access  Private (Trainers only)
+
 router.get('/trainer/myplans', protect, trainerOnly, async (req, res) => {
   try {
     const plans = await FitnessPlan.find({ trainer: req.user._id })

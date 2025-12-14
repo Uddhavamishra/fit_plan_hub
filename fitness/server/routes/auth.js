@@ -26,9 +26,7 @@ const loginValidation = [
   body('password').notEmpty().withMessage('Password is required')
 ];
 
-// @route   POST /api/auth/signup
-// @desc    Register new user or trainer
-// @access  Public
+
 router.post('/signup', signupValidation, async (req, res) => {
   try {
     // Check for validation errors
@@ -74,9 +72,7 @@ router.post('/signup', signupValidation, async (req, res) => {
   }
 });
 
-// @route   POST /api/auth/login
-// @desc    Login user or trainer
-// @access  Public
+
 router.post('/login', loginValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -117,9 +113,7 @@ router.post('/login', loginValidation, async (req, res) => {
   }
 });
 
-// @route   GET /api/auth/me
-// @desc    Get current user profile
-// @access  Private
+
 router.get('/me', protect, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
@@ -133,9 +127,7 @@ router.get('/me', protect, async (req, res) => {
   }
 });
 
-// @route   PUT /api/auth/profile
-// @desc    Update user profile
-// @access  Private
+
 router.put('/profile', protect, async (req, res) => {
   try {
     const { name, bio, specialization } = req.body;

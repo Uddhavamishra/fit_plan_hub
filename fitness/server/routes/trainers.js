@@ -6,9 +6,6 @@ const { protect, optionalAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// @route   GET /api/trainers
-// @desc    Get all trainers
-// @access  Public
 router.get('/', async (req, res) => {
   try {
     const { search, specialization } = req.query;
@@ -58,9 +55,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route   GET /api/trainers/:id
-// @desc    Get trainer profile with their plans
-// @access  Public (with optional auth for follow status)
 router.get('/:id', optionalAuth, async (req, res) => {
   try {
     const trainer = await User.findOne({ 

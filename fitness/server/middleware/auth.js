@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Protect routes - verify token
+// verify token
 const protect = async (req, res, next) => {
   let token;
 
@@ -13,7 +13,7 @@ const protect = async (req, res, next) => {
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       
-      // Get user from token (exclude password)
+      // Get user from token 
       req.user = await User.findById(decoded.id).select('-password');
       
       if (!req.user) {
@@ -32,7 +32,7 @@ const protect = async (req, res, next) => {
   }
 };
 
-// Optional auth - sets user if token exists, continues regardless
+// Optional 
 const optionalAuth = async (req, res, next) => {
   let token;
 
@@ -42,7 +42,7 @@ const optionalAuth = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.id).select('-password');
     } catch (error) {
-      // Token invalid, but continue without user
+      
       req.user = null;
     }
   }
@@ -50,7 +50,7 @@ const optionalAuth = async (req, res, next) => {
   next();
 };
 
-// Trainer only access
+
 const trainerOnly = (req, res, next) => {
   if (req.user && req.user.role === 'trainer') {
     next();
@@ -59,7 +59,7 @@ const trainerOnly = (req, res, next) => {
   }
 };
 
-// User only access
+
 const userOnly = (req, res, next) => {
   if (req.user && req.user.role === 'user') {
     next();
