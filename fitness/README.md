@@ -1,6 +1,6 @@
 FitPlanHub - Trainers & Users Fitness Platform
 
-A fullstack proram build to manage 
+A fullstack proram build to manage training plans and clients 
 
 User Features
 User authentication (signup/login)
